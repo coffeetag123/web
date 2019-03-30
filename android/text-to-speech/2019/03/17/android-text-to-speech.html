@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.0 -->
+<title>Part 1: Basic Android Text To Speech | CoffeeTag</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Part 1: Basic Android Text To Speech" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Everything can be solved with enough coffee!" />
+<meta property="og:description" content="Everything can be solved with enough coffee!" />
+<link rel="canonical" href="http://localhost:4000/android/text-to-speech/2019/03/17/android-text-to-speech.html" />
+<meta property="og:url" content="http://localhost:4000/android/text-to-speech/2019/03/17/android-text-to-speech.html" />
+<meta property="og:site_name" content="CoffeeTag" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-03-17T00:00:00+09:00" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/android/text-to-speech/2019/03/17/android-text-to-speech.html"},"url":"http://localhost:4000/android/text-to-speech/2019/03/17/android-text-to-speech.html","headline":"Part 1: Basic Android Text To Speech","dateModified":"2019-03-17T00:00:00+09:00","datePublished":"2019-03-17T00:00:00+09:00","description":"Everything can be solved with enough coffee!","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="CoffeeTag" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">CoffeeTag</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Part 1: Basic Android Text To Speech</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-03-17T00:00:00+09:00" itemprop="datePublished">Mar 17, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <style>
+
+ol.step
+{
+	counter-reset: item;
+	list-style-type: decimal;
+	margin-left: 0;
+}
+
+ol.step li
+{
+	list-style: none;
+	padding: 20px 0;
+	font-size: larger;
+}
+
+ol.step li:before
+{
+	content: "Step " counter(item, decimal) ". ";
+	counter-increment: item;
+}
+
+</style>
+
+<ol class="step">
+	<li>
+		<h2>Prepare device</h2>
+		<div>
+			Confirm that your device has text to speech support for English. This is usually not a problem if you use an emulator as it is should be built in.
+			<br />
+			This can be done by going to: Settings &gt; Language and Input &gt; Text-to-Speech output.
+			<br />
+			<a href="/assets/img/2019-03-17-android-text-to-speech/confirm-text-to-speech-support.png">
+				<img src="/assets/img/2019-03-17-android-text-to-speech/confirm-text-to-speech-support.png" alt="Instructions to check text to speech support" />
+			</a>
+		</div>
+	</li>
+	<li>
+		<h2>Create new activity</h2>
+		<div>
+			<a href="/assets/img/2019-03-17-android-text-to-speech/create-new-activity.png">
+				<img src="/assets/img/2019-03-17-android-text-to-speech/create-new-activity.png" alt="Start android studio and create a new blank activity" />
+			</a>
+		</div>
+	</li>
+	<li>
+		<h2>Create a new java class called "TextToSpeechHelper"</h2>
+		<div>
+			<a href="/assets/img/2019-03-17-android-text-to-speech/create-text-to-speech-helper.png">
+				<img src="/assets/img/2019-03-17-android-text-to-speech/create-text-to-speech-helper.png" alt="create new java class called: TextToSpeechHelper" />
+			</a>
+			<br />
+			Creating a new Java class will make it easier to reuse this code in other projects in the future.
+		</div>
+	</li>
+	<li>
+		<h2>Create required variables and implement listener</h2>
+		<div>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TextToSpeechHelper</span> <span class="kd">implements</span> <span class="n">TextToSpeech</span><span class="o">.</span><span class="na">OnInitListener</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">REQUEST_CODE_CHECK_TTS</span> <span class="o">=</span> <span class="mi">1234</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="n">TextToSpeech</span> <span class="n">tts</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">WeakReference</span><span class="o">&lt;</span><span class="n">Activity</span><span class="o">&gt;</span> <span class="n">activityRef</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">isReadyFlag</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="n">Runnable</span> <span class="n">textToSpeechNotSupportedRunnable</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Runnable</span> <span class="n">dataIsMissingRunnable</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Runnable</span> <span class="n">languageNotSupportedRunnable</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">TextToSpeechHelper</span><span class="o">(</span><span class="n">Activity</span> <span class="n">activity</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">activityRef</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WeakReference</span><span class="o">&lt;&gt;(</span><span class="n">activity</span><span class="o">);</span>
+        <span class="n">dispatchCheckTextToSpeechDataIntent</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onInit</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">isReadyFlag</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+		<br />
+		"REQUEST_CODE_CHECK_TTS" is a unique number used to identify the intent that called by this class. This will later be used by the "onActivityResult" method. If your activity handles multiple intents, please make sure that their request codes are unique.
+		<br />
+		The three runnables: "textToSpeechNotSupportedRunnable", "dataIsMissingRunnable" and "languageNotSupportedRunnable" are used as hooks for any errors that may occur.
+		<br />
+		The constructor stores the activity that will use this class in a weak reference and calls "dispatchChecktextToSpeechDataIntent" to initialize the text to speech API.
+		<br />
+		A weak reference is used to avoid memory leaks that may occur when the activity is destroyed without first removing any references to this class.
+		<br />
+		The "onInit" method is called by the text to speech api once it is successfully initialised. In this function we will update the variable "isReadyFlag" to indicate that text to speech has been successfully initialised and can be used.
+		</div>
+	</li>
+	<li>
+		<h2>Create a function to check if text to speech is supported</h2>
+		<div>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">dispatchCheckTextToSpeechDataIntent</span><span class="o">()</span>
+<span class="o">{</span>
+    <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">activityRef</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">Activity</span> <span class="n">activity</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">activityRef</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+        <span class="n">Intent</span> <span class="n">i</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
+        <span class="n">i</span><span class="o">.</span><span class="na">setAction</span><span class="o">(</span><span class="n">TextToSpeech</span><span class="o">.</span><span class="na">Engine</span><span class="o">.</span><span class="na">ACTION_CHECK_TTS_DATA</span><span class="o">);</span>
+        <span class="n">activity</span><span class="o">.</span><span class="na">startActivityForResult</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">REQUEST_CODE_CHECK_TTS</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+	</div>
+	</li>
+	<li>
+		<h2>Create a function to process the dispatched intent</h2>
+		<div>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">onActivityResult</span><span class="o">(</span><span class="kt">int</span> <span class="n">requestCode</span><span class="o">,</span> <span class="kt">int</span> <span class="n">resultCode</span><span class="o">,</span> <span class="n">Intent</span> <span class="n">data</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="kt">boolean</span> <span class="n">requestCodeIsCorrect</span> <span class="o">=</span> <span class="n">requestCode</span> <span class="o">==</span> <span class="n">REQUEST_CODE_CHECK_TTS</span><span class="o">;</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">requestCodeIsCorrect</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="kt">boolean</span> <span class="n">resultCodeIsCorrect</span> <span class="o">=</span> <span class="n">resultCode</span> <span class="o">==</span> <span class="n">TextToSpeech</span><span class="o">.</span><span class="na">Engine</span><span class="o">.</span><span class="na">CHECK_VOICE_DATA_PASS</span><span class="o">;</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">resultCodeIsCorrect</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="n">initTextToSpeech</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">else</span>
+        <span class="o">{</span>
+            <span class="n">executeTextToSpeechNotSupportedRunnable</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+		<br />
+		This method will initialize the text to speech API if the request code matches "REQUEST_CODE_CHECK_TTS" and if the result code is correct.
+		<br />
+		If the request code is correct but the result code is incorrect, then "textToSpeechNotSupportedRunnable" will be called.
+		</div>
+	</li>
+	<li>
+		<h2>Create a function to initialise text to speech API</h2>
+		<div>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">initTextToSpeech</span><span class="o">()</span>
+<span class="o">{</span>
+    <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">activityRef</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">Activity</span> <span class="n">activity</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">activityRef</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">tts</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TextToSpeech</span><span class="o">(</span><span class="n">activity</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+		</div>
+	</li>
+	<li>
+		<h2>Create a function to allow activity to check if text to speech is ready</h2>
+		<div>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isReady</span><span class="o">()</span>
+<span class="o">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">isReadyFlag</span><span class="o">;</span>
+<span class="o">}</span></code></pre></figure>
+
+		</div>
+	</li>
+	<li>
+		<h2>Create a function to release all resources</h2>
+		<div>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">destroy</span><span class="o">()</span>
+<span class="o">{</span>
+    <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">tts</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">tts</span><span class="o">.</span><span class="na">stop</span><span class="o">();</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">tts</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">tts</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+        <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechNotSupportedRunnable</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">dataIsMissingRunnable</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">languageNotSupportedRunnable</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">isReadyFlag</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+		<br />
+		This function must be called before the activity calling this class is destroyed to prevent memory leaks.
+		</div>
+	</li>
+	<li>
+		<h2>Create a function to speak passed string</h2>
+		<div>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">speak</span><span class="o">(</span><span class="n">Locale</span> <span class="n">locale</span><span class="o">,</span> <span class="n">String</span> <span class="n">stringToSpeak</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">tts</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">tts</span><span class="o">.</span><span class="na">setLanguage</span><span class="o">(</span><span class="n">locale</span><span class="o">);</span>
+        <span class="kt">boolean</span> <span class="n">dataIsMissing</span> <span class="o">=</span> <span class="o">(</span><span class="n">result</span> <span class="o">==</span> <span class="n">TextToSpeech</span><span class="o">.</span><span class="na">LANG_MISSING_DATA</span><span class="o">);</span>
+        <span class="kt">boolean</span> <span class="n">languageNotSupported</span> <span class="o">=</span> <span class="o">(</span><span class="n">result</span> <span class="o">==</span> <span class="n">TextToSpeech</span><span class="o">.</span><span class="na">LANG_NOT_SUPPORTED</span><span class="o">);</span>
+
+        <span class="k">if</span><span class="o">(</span><span class="n">dataIsMissing</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="n">executeDataIsMissingRunnable</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">languageNotSupported</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="n">executeLanguageNotSupportedRunnable</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">else</span>
+        <span class="o">{</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">stringToSpeak</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+            <span class="o">{</span>
+                <span class="c1">//clear all text in queue</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">tts</span><span class="o">.</span><span class="na">speak</span><span class="o">(</span><span class="s">""</span><span class="o">,</span> <span class="n">TextToSpeech</span><span class="o">.</span><span class="na">QUEUE_FLUSH</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="k">else</span>
+            <span class="o">{</span>
+                <span class="c1">//append text to queue</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">tts</span><span class="o">.</span><span class="na">speak</span><span class="o">(</span><span class="n">stringToSpeak</span><span class="o">,</span> <span class="n">TextToSpeech</span><span class="o">.</span><span class="na">QUEUE_ADD</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+			<br />
+			This is the method that is called to make android speak. It takes in 2 parameters; the first is the locale which will determine the language that is spoken. The second parameter is the string that will be spoken.
+			<br />
+			If the locale specified is not supported then "languageNotSupportedRunnable" will be called. If the locale is supported but there are no text to speech data available then "dataIsMissingRunnable" will be be called.
+			<br />
+			The string to be spoken is usually appended to the previous string but if "stringToSpeak" is null, then it will stop the speaking process by clearing all the queued strings.
+		</div>
+	</li>
+	<li>
+		<h2>Add methods to call and set error hooks</h2>
+		<div>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">executeTextToSpeechNotSupportedRunnable</span><span class="o">()</span>
+<span class="o">{</span>
+    <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">textToSpeechNotSupportedRunnable</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechNotSupportedRunnable</span><span class="o">.</span><span class="na">run</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTextToSpeechNotSupportedRunnable</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">r</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechNotSupportedRunnable</span> <span class="o">=</span> <span class="n">r</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">executeDataIsMissingRunnable</span><span class="o">()</span>
+<span class="o">{</span>
+    <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">dataIsMissingRunnable</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">dataIsMissingRunnable</span><span class="o">.</span><span class="na">run</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDataIsMissingRunnable</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">r</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">dataIsMissingRunnable</span> <span class="o">=</span> <span class="n">r</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">executeLanguageNotSupportedRunnable</span><span class="o">()</span>
+<span class="o">{</span>
+    <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">languageNotSupportedRunnable</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">languageNotSupportedRunnable</span><span class="o">.</span><span class="na">run</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setLanguageNotSupportedRunnable</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">r</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">languageNotSupportedRunnable</span> <span class="o">=</span> <span class="n">r</span><span class="o">;</span>
+<span class="o">}</span></code></pre></figure>
+
+		</div>
+	</li>
+	<li>
+		<h2>Initialise TextToSpeechHelper</h2>
+		<div>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainActivity</span> <span class="kd">extends</span> <span class="n">AppCompatActivity</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">TextToSpeechHelper</span> <span class="n">textToSpeechHelper</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
+        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity_main</span><span class="o">);</span>
+
+        <span class="n">initTextToSpeech</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">initTextToSpeech</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TextToSpeechHelper</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="kd">final</span> <span class="n">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span><span class="o">.</span><span class="na">setTextToSpeechNotSupportedRunnable</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                <span class="n">Toast</span><span class="o">.</span><span class="na">makeText</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="s">"Language not supported"</span><span class="o">,</span> <span class="n">Toast</span><span class="o">.</span><span class="na">LENGTH_LONG</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span><span class="o">.</span><span class="na">setDataIsMissingRunnable</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                <span class="n">Toast</span><span class="o">.</span><span class="na">makeText</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="s">"Language data is missing"</span><span class="o">,</span> <span class="n">Toast</span><span class="o">.</span><span class="na">LENGTH_LONG</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span><span class="o">.</span><span class="na">setLanguageNotSupportedRunnable</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                <span class="n">Toast</span><span class="o">.</span><span class="na">makeText</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="s">"Language not supported"</span><span class="o">,</span> <span class="n">Toast</span><span class="o">.</span><span class="na">LENGTH_LONG</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+			<br />
+		</div>
+	</li>
+	<li>
+		<h2>Add onActivityResult</h2>
+		<div>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onActivityResult</span><span class="o">(</span><span class="kt">int</span> <span class="n">requestCode</span><span class="o">,</span> <span class="kt">int</span> <span class="n">resultCode</span><span class="o">,</span> <span class="n">Intent</span> <span class="n">data</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span><span class="o">.</span><span class="na">onActivityResult</span><span class="o">(</span><span class="n">requestCode</span><span class="o">,</span> <span class="n">resultCode</span><span class="o">,</span> <span class="n">data</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+			<br />
+			The purpose of this code is to pass the processed intents to the TextToSpeechHelper instance, where it will be processed.
+		</div>
+	</li>
+	<li>
+		<h2>Destroy TextToSpeechHelper when activity is destroyed</h2>
+		<div>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onDestroy</span><span class="o">()</span>
+<span class="o">{</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">onDestroy</span><span class="o">();</span>
+    <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span><span class="o">.</span><span class="na">destroy</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+		<br />
+		This will call the TextToSpeechHelper's destroy method which releases all resources assigned.
+		</div>
+	</li>
+	<li>
+		<h2>Add code to speak when button is pressed</h2>
+		<div>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">speak</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="kt">boolean</span> <span class="n">textToSpeechNotNull</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">textToSpeechNotNull</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span><span class="o">.</span><span class="na">isReady</span><span class="o">())</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span><span class="o">.</span><span class="na">speak</span><span class="o">(</span><span class="n">Locale</span><span class="o">.</span><span class="na">US</span><span class="o">,</span> <span class="s">"Hello Coffee Tag"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+			<br />
+			To make the app speak in English, we passed the locale: "Locale.US". You can make it speak other languages by changing the locale and provide the correct string.
+		</div>
+	</li>
+	<li>
+		<h2>Add a button in xml</h2>
+		<div>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;LinearLayout</span>
+    <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+    <span class="na">android:layout_height=</span><span class="s">"match_parent"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;Button</span>
+        <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:text=</span><span class="s">"speak"</span>
+        <span class="na">android:onClick=</span><span class="s">"speak"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/LinearLayout&gt;</span></code></pre></figure>
+
+			<br />
+			This will create a simple layout that has only one button. When the button is pressed, the "speak" method in MainActivity.java will be called.
+			<br />
+			<a href="/assets/img/2019-03-17-android-text-to-speech/ui.png">
+				<img src="/assets/img/2019-03-17-android-text-to-speech/ui.png" alt="user interface containing only one button" />
+			</a>
+		</div>
+	</li>
+</ol>
+
+<p><br /></p>
+<div id="fullCodeTextToSpeech">
+<h2>TextToSpeechHelper.java</h2>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="n">coffeetag</span><span class="o">.</span><span class="na">textToSpeechPart1</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">android.app.Activity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.content.Intent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.speech.tts.TextToSpeech</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.lang.ref.WeakReference</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Locale</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TextToSpeechHelper</span> <span class="kd">implements</span> <span class="n">TextToSpeech</span><span class="o">.</span><span class="na">OnInitListener</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">REQUEST_CODE_CHECK_TTS</span> <span class="o">=</span> <span class="mi">1234</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="n">TextToSpeech</span> <span class="n">tts</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">WeakReference</span><span class="o">&lt;</span><span class="n">Activity</span><span class="o">&gt;</span> <span class="n">activityRef</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">isReadyFlag</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="n">Runnable</span> <span class="n">textToSpeechNotSupportedRunnable</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Runnable</span> <span class="n">dataIsMissingRunnable</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Runnable</span> <span class="n">languageNotSupportedRunnable</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">TextToSpeechHelper</span><span class="o">(</span><span class="n">Activity</span> <span class="n">activity</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">activityRef</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WeakReference</span><span class="o">&lt;&gt;(</span><span class="n">activity</span><span class="o">);</span>
+        <span class="n">dispatchCheckTextToSpeechDataIntent</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onInit</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">isReadyFlag</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">dispatchCheckTextToSpeechDataIntent</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">activityRef</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="n">Activity</span> <span class="n">activity</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">activityRef</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+            <span class="n">Intent</span> <span class="n">i</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
+            <span class="n">i</span><span class="o">.</span><span class="na">setAction</span><span class="o">(</span><span class="n">TextToSpeech</span><span class="o">.</span><span class="na">Engine</span><span class="o">.</span><span class="na">ACTION_CHECK_TTS_DATA</span><span class="o">);</span>
+            <span class="n">activity</span><span class="o">.</span><span class="na">startActivityForResult</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">REQUEST_CODE_CHECK_TTS</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onActivityResult</span><span class="o">(</span><span class="kt">int</span> <span class="n">requestCode</span><span class="o">,</span> <span class="kt">int</span> <span class="n">resultCode</span><span class="o">,</span> <span class="n">Intent</span> <span class="n">data</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="kt">boolean</span> <span class="n">requestCodeIsCorrect</span> <span class="o">=</span> <span class="n">requestCode</span> <span class="o">==</span> <span class="n">REQUEST_CODE_CHECK_TTS</span><span class="o">;</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">requestCodeIsCorrect</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="kt">boolean</span> <span class="n">resultCodeIsCorrect</span> <span class="o">=</span> <span class="n">resultCode</span> <span class="o">==</span> <span class="n">TextToSpeech</span><span class="o">.</span><span class="na">Engine</span><span class="o">.</span><span class="na">CHECK_VOICE_DATA_PASS</span><span class="o">;</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">resultCodeIsCorrect</span><span class="o">)</span>
+            <span class="o">{</span>
+                <span class="n">initTextToSpeech</span><span class="o">();</span>
+            <span class="o">}</span>
+            <span class="k">else</span>
+            <span class="o">{</span>
+                <span class="n">executeTextToSpeechNotSupportedRunnable</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">initTextToSpeech</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">activityRef</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="n">Activity</span> <span class="n">activity</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">activityRef</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">tts</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TextToSpeech</span><span class="o">(</span><span class="n">activity</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isReady</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">isReadyFlag</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">destroy</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">tts</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">tts</span><span class="o">.</span><span class="na">stop</span><span class="o">();</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">tts</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">tts</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+            <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechNotSupportedRunnable</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">dataIsMissingRunnable</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">languageNotSupportedRunnable</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">isReadyFlag</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">speak</span><span class="o">(</span><span class="n">Locale</span> <span class="n">locale</span><span class="o">,</span> <span class="n">String</span> <span class="n">stringToSpeak</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">tts</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">tts</span><span class="o">.</span><span class="na">setLanguage</span><span class="o">(</span><span class="n">locale</span><span class="o">);</span>
+            <span class="kt">boolean</span> <span class="n">dataIsMissing</span> <span class="o">=</span> <span class="o">(</span><span class="n">result</span> <span class="o">==</span> <span class="n">TextToSpeech</span><span class="o">.</span><span class="na">LANG_MISSING_DATA</span><span class="o">);</span>
+            <span class="kt">boolean</span> <span class="n">languageNotSupported</span> <span class="o">=</span> <span class="o">(</span><span class="n">result</span> <span class="o">==</span> <span class="n">TextToSpeech</span><span class="o">.</span><span class="na">LANG_NOT_SUPPORTED</span><span class="o">);</span>
+
+            <span class="k">if</span><span class="o">(</span><span class="n">dataIsMissing</span><span class="o">)</span>
+            <span class="o">{</span>
+                <span class="n">executeDataIsMissingRunnable</span><span class="o">();</span>
+            <span class="o">}</span>
+            <span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">languageNotSupported</span><span class="o">)</span>
+            <span class="o">{</span>
+                <span class="n">executeLanguageNotSupportedRunnable</span><span class="o">();</span>
+            <span class="o">}</span>
+            <span class="k">else</span>
+            <span class="o">{</span>
+                <span class="k">if</span><span class="o">(</span><span class="n">stringToSpeak</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+                <span class="o">{</span>
+                    <span class="c1">//clear all text in queue</span>
+                    <span class="k">this</span><span class="o">.</span><span class="na">tts</span><span class="o">.</span><span class="na">speak</span><span class="o">(</span><span class="s">""</span><span class="o">,</span> <span class="n">TextToSpeech</span><span class="o">.</span><span class="na">QUEUE_FLUSH</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+                <span class="o">}</span>
+                <span class="k">else</span>
+                <span class="o">{</span>
+                    <span class="c1">//append text to queue</span>
+                    <span class="k">this</span><span class="o">.</span><span class="na">tts</span><span class="o">.</span><span class="na">speak</span><span class="o">(</span><span class="n">stringToSpeak</span><span class="o">,</span> <span class="n">TextToSpeech</span><span class="o">.</span><span class="na">QUEUE_ADD</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">executeTextToSpeechNotSupportedRunnable</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">textToSpeechNotSupportedRunnable</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechNotSupportedRunnable</span><span class="o">.</span><span class="na">run</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTextToSpeechNotSupportedRunnable</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">r</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechNotSupportedRunnable</span> <span class="o">=</span> <span class="n">r</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">executeDataIsMissingRunnable</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">dataIsMissingRunnable</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">dataIsMissingRunnable</span><span class="o">.</span><span class="na">run</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDataIsMissingRunnable</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">r</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">dataIsMissingRunnable</span> <span class="o">=</span> <span class="n">r</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">executeLanguageNotSupportedRunnable</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">languageNotSupportedRunnable</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">languageNotSupportedRunnable</span><span class="o">.</span><span class="na">run</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setLanguageNotSupportedRunnable</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">r</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">languageNotSupportedRunnable</span> <span class="o">=</span> <span class="n">r</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+</div>
+<p><br /></p>
+<div>
+	<h2>MainActivity.java</h2>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="n">coffeetag</span><span class="o">.</span><span class="na">textToSpeechPart1</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">android.content.Context</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.content.Intent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.support.v7.app.AppCompatActivity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.os.Bundle</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.view.View</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.Toast</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.Locale</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainActivity</span> <span class="kd">extends</span> <span class="n">AppCompatActivity</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">TextToSpeechHelper</span> <span class="n">textToSpeechHelper</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
+        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity_main</span><span class="o">);</span>
+
+        <span class="n">initTextToSpeech</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">initTextToSpeech</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TextToSpeechHelper</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="kd">final</span> <span class="n">Context</span> <span class="n">context</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span><span class="o">.</span><span class="na">setTextToSpeechNotSupportedRunnable</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                <span class="n">Toast</span><span class="o">.</span><span class="na">makeText</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="s">"Language not supported"</span><span class="o">,</span> <span class="n">Toast</span><span class="o">.</span><span class="na">LENGTH_LONG</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span><span class="o">.</span><span class="na">setDataIsMissingRunnable</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                <span class="n">Toast</span><span class="o">.</span><span class="na">makeText</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="s">"Language data is missing"</span><span class="o">,</span> <span class="n">Toast</span><span class="o">.</span><span class="na">LENGTH_LONG</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span><span class="o">.</span><span class="na">setLanguageNotSupportedRunnable</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                <span class="n">Toast</span><span class="o">.</span><span class="na">makeText</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="s">"Language not supported"</span><span class="o">,</span> <span class="n">Toast</span><span class="o">.</span><span class="na">LENGTH_LONG</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onActivityResult</span><span class="o">(</span><span class="kt">int</span> <span class="n">requestCode</span><span class="o">,</span> <span class="kt">int</span> <span class="n">resultCode</span><span class="o">,</span> <span class="n">Intent</span> <span class="n">data</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span><span class="o">.</span><span class="na">onActivityResult</span><span class="o">(</span><span class="n">requestCode</span><span class="o">,</span> <span class="n">resultCode</span><span class="o">,</span> <span class="n">data</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onDestroy</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onDestroy</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span><span class="o">.</span><span class="na">destroy</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">speak</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="kt">boolean</span> <span class="n">textToSpeechNotNull</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">textToSpeechNotNull</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span><span class="o">.</span><span class="na">isReady</span><span class="o">())</span>
+        <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">textToSpeechHelper</span><span class="o">.</span><span class="na">speak</span><span class="o">(</span><span class="n">Locale</span><span class="o">.</span><span class="na">US</span><span class="o">,</span> <span class="s">"Hello Coffee Tag"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+</div>
+<p><br /></p>
+<div id="fullCodeactivity_main">
+	<h2>activity_main.xml</h2>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;LinearLayout</span>
+    <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+    <span class="na">android:layout_height=</span><span class="s">"match_parent"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;Button</span>
+        <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:text=</span><span class="s">"speak"</span>
+        <span class="na">android:onClick=</span><span class="s">"speak"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/LinearLayout&gt;</span></code></pre></figure>
+
+</div>
+
+  </div><a class="u-url" href="/android/text-to-speech/2019/03/17/android-text-to-speech.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CoffeeTag</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">CoffeeTag</li><li><a class="u-email" href="mailto:coffeetag123＠gmail・com">coffeetag123＠gmail・com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/coffeetag123"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">coffeetag123</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Everything can be solved with enough coffee!</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
