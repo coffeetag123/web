@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/web/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/web/" rel="alternate" type="text/html" /><updated>2019-03-30T18:55:20+09:00</updated><id>http://localhost:4000/web/feed.xml</id><title type="html">CoffeeTag</title><subtitle>Everything can be solved with enough coffee!</subtitle><entry><title type="html">Part 1: Basic Android Text To Speech</title><link href="http://localhost:4000/web/android/text-to-speech/2019/03/17/android-text-to-speech.html" rel="alternate" type="text/html" title="Part 1: Basic Android Text To Speech" /><published>2019-03-17T00:00:00+09:00</published><updated>2019-03-17T00:00:00+09:00</updated><id>http://localhost:4000/web/android/text-to-speech/2019/03/17/android-text-to-speech</id><content type="html" xml:base="http://localhost:4000/web/android/text-to-speech/2019/03/17/android-text-to-speech.html">&lt;style&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/web/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/web/" rel="alternate" type="text/html" /><updated>2019-03-30T22:05:43+09:00</updated><id>http://localhost:4000/web/feed.xml</id><title type="html">CoffeeTag</title><subtitle>Everything can be solved with enough coffee!</subtitle><entry><title type="html">Part 1: Basic Android Text To Speech</title><link href="http://localhost:4000/web/android/text-to-speech/2019/03/17/android-text-to-speech.html" rel="alternate" type="text/html" title="Part 1: Basic Android Text To Speech" /><published>2019-03-17T00:00:00+09:00</published><updated>2019-03-17T00:00:00+09:00</updated><id>http://localhost:4000/web/android/text-to-speech/2019/03/17/android-text-to-speech</id><content type="html" xml:base="http://localhost:4000/web/android/text-to-speech/2019/03/17/android-text-to-speech.html">&lt;style&gt;
 
 ol.step
 {
@@ -30,24 +30,24 @@ ol.step li:before
 			&lt;br /&gt;
 			This can be done by going to: Settings &amp;gt; Language and Input &amp;gt; Text-to-Speech output.
 			&lt;br /&gt;
-			&lt;a href=&quot;/assets/img/2019-03-17-android-text-to-speech/confirm-text-to-speech-support.png&quot;&gt;
-				&lt;img src=&quot;/assets/img/2019-03-17-android-text-to-speech/confirm-text-to-speech-support.png&quot; alt=&quot;Instructions to check text to speech support&quot; /&gt;
+			&lt;a href=&quot;/web/assets/img/2019-03-17-android-text-to-speech/confirm-text-to-speech-support.png&quot;&gt;
+				&lt;img src=&quot;/web/assets/img/2019-03-17-android-text-to-speech/confirm-text-to-speech-support.png&quot; alt=&quot;Instructions to check text to speech support&quot; /&gt;
 			&lt;/a&gt;
 		&lt;/div&gt;
 	&lt;/li&gt;
 	&lt;li&gt;
 		&lt;h2&gt;Create new activity&lt;/h2&gt;
 		&lt;div&gt;
-			&lt;a href=&quot;/assets/img/2019-03-17-android-text-to-speech/create-new-activity.png&quot;&gt;
-				&lt;img src=&quot;/assets/img/2019-03-17-android-text-to-speech/create-new-activity.png&quot; alt=&quot;Start android studio and create a new blank activity&quot; /&gt;
+			&lt;a href=&quot;/web/assets/img/2019-03-17-android-text-to-speech/create-new-activity.png&quot;&gt;
+				&lt;img src=&quot;/web/assets/img/2019-03-17-android-text-to-speech/create-new-activity.png&quot; alt=&quot;Start android studio and create a new blank activity&quot; /&gt;
 			&lt;/a&gt;
 		&lt;/div&gt;
 	&lt;/li&gt;
 	&lt;li&gt;
 		&lt;h2&gt;Create a new java class called &quot;TextToSpeechHelper&quot;&lt;/h2&gt;
 		&lt;div&gt;
-			&lt;a href=&quot;/assets/img/2019-03-17-android-text-to-speech/create-text-to-speech-helper.png&quot;&gt;
-				&lt;img src=&quot;/assets/img/2019-03-17-android-text-to-speech/create-text-to-speech-helper.png&quot; alt=&quot;create new java class called: TextToSpeechHelper&quot; /&gt;
+			&lt;a href=&quot;/web/assets/img/2019-03-17-android-text-to-speech/create-text-to-speech-helper.png&quot;&gt;
+				&lt;img src=&quot;/web/assets/img/2019-03-17-android-text-to-speech/create-text-to-speech-helper.png&quot; alt=&quot;create new java class called: TextToSpeechHelper&quot; /&gt;
 			&lt;/a&gt;
 			&lt;br /&gt;
 			Creating a new Java class will make it easier to reuse this code in other projects in the future.
@@ -394,8 +394,8 @@ ol.step li:before
 			&lt;br /&gt;
 			This will create a simple layout that has only one button. When the button is pressed, the &quot;speak&quot; method in MainActivity.java will be called.
 			&lt;br /&gt;
-			&lt;a href=&quot;/assets/img/2019-03-17-android-text-to-speech/ui.png&quot;&gt;
-				&lt;img src=&quot;/assets/img/2019-03-17-android-text-to-speech/ui.png&quot; alt=&quot;user interface containing only one button&quot; /&gt;
+			&lt;a href=&quot;/web/assets/img/2019-03-17-android-text-to-speech/ui.png&quot;&gt;
+				&lt;img src=&quot;/web/assets/img/2019-03-17-android-text-to-speech/ui.png&quot; alt=&quot;user interface containing only one button&quot; /&gt;
 			&lt;/a&gt;
 		&lt;/div&gt;
 	&lt;/li&gt;
